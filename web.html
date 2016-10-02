@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>webApp</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			position: relative;
+		}
+		#show-client{
+			margin: 20px;
+		}
+		#pic{
+			width: 320px;
+			height: 268px;
+			background: lightblue;
+			color: yellow;
+			line-height: 268px;
+			text-align: center;
+			font-size: 50px;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		#btn {
+			width: 20px;
+			height: 20px;
+			background: #444;
+			border-radius: 50%;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="pic">触摸板</div>
+<div id="btn"></div>
+<div id="show-client">
+	clientX:<span></span> px,
+	clientY:<span></span> px
+</div>
+<script type="text/javascript">
+	window.onload = function(){
+
+		var oPic = document.getElementById('pic'),
+				oBtn = document.getElementById('btn'),
+				oShow = document.getElementById('show-client'),
+				oClientX = oShow.getElementsByTagName('span')[0],
+				oClientY = oShow.getElementsByTagName('span')[1],
+				objDown = {},
+				objUp = {},
+				objStart,
+				objEnd;
+
+		function getClient(e){
+			oClientX.innerHTML = e.clientX;
+			oClientY.innerHTML = e.clientY;
+			oBtn.style.left = e.clientX + 'px';
+			oBtn.style.top = e.clientY + 'px';
+		}
+
+		function getDown(e) {
+			objDown = {
+				x: e.clientX,
+				y: e.clientY
+			};
+			return objDown;
+		}
+		function getUp(e){
+			objUp = {
+				x: e.clientX,
+				y: e.clientY
+			};
+			return objUp;
+		}
+
+		function getSlash(e, objDown, objUp ){
+			var xSpacing = objUp.x - objDown.x,
+					ySpacing = objUp.y - objDown.y;
+			var slash = Math.sqrt(xSpacing * xSpacing + ySpacing * ySpacing);
+			console.log(slash,3);
+		}
+
+		oPic.addEventListener('mousemove', function(e){
+			e = e || window.event;
+			getClient(e);
+		})
+
+	}
+</script>
+</body>
+</html>
